@@ -1,15 +1,17 @@
 #include <Servo.h>
 #include <PID_v1.h>
 #include "Adafruit_VL53L1X.h"
-
+#include <Adafruit_NeoPixel.h>
 
 // Definizione pin e oggetti
 #define IRQ_PIN 2
 #define XSHUT_PIN 3
-
+#define LED_PIN 6
+#define NUMPIXELS 1
+#define PIN_START 7
 
 Adafruit_VL53L1X vl53 = Adafruit_VL53L1X(XSHUT_PIN, IRQ_PIN);
-
+Adafruit_NeoPixel pixels(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 const int servoPin = 9;
 const int setposition = A0;  // Collega il potenziometro al pin analogico A0
@@ -55,9 +57,13 @@ void setup() {
   Serial.print(F("Timing budget (ms): "));
   Serial.println(vl53.getTimingBudget());
 
+  vl53.VL53L1X_SetROI(4, 4);
+
+
   myServo.attach(servoPin); // Attach Servo
 
-
+  pixels.begin(); // Initialize NeoPixel strip
+  pixels.show();  // Initialize all pixels to 'off'
 
   Input = readPosition(); // Sets the initial input to the PID algorithm
   myPID.SetMode(AUTOMATIC); // Set PID object myPID to AUTOMATIC
@@ -79,6 +85,15 @@ void loop() {
     ServoOutput = 82 - Output; // 82 degrees is the horizontal, can change depending on the current angle of the motor
     myServo.write(ServoOutput); // Writes value of Output to servo
 
+    // Controlla la distanza e accende il LED corrispondente
+    if (abs(Input - Setpoint) <= tolerance) {
+      pixels.setPixelColor(0, pixels.Color(0, 0, 255)); // Blu
+    } else if (Input > Setpoint + tolerance) {
+      pixels.setPixelColor(0, pixels.Color(0, 255, 0)); // Verde
+    } else {
+      pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // Rosso
+    }
+    pixels.show(); // Aggiorna il LED
 
     // Stampa i valori su Serial per il plotter
     Serial.print("Timestamp:");
