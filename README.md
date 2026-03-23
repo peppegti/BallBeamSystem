@@ -89,21 +89,22 @@ If you have suggestions for improvements or encounter any issues, feel free to s
 
 This repository is licensed under the MIT License. By using, modifying, or distributing the code and resources in this repository, you agree to the terms and conditions outlined in the license file.
 
-<!--
+
 Please cite this work as:  
 
 <div style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
    <pre>
-       @article{doe2023,
-         title={Ball Beam System},
-         author={Giuseppe Sutera},
-         journal={xxxx Journal},
-         year={2024},
-         url={https://example.com/article}
+       @article{sutera2026design,
+       title={Design and Implementation of a Ball and Beam Control System Using a PID Controller},
+       author={Sutera, Giuseppe and Guastella, Dario Calogero and Cancelliere, Francesco and Muscato, Giovanni},
+       journal={IEEE Transactions on Education},
+       year={2026},
+       publisher={IEEE}
+         url={https://ieeexplore.ieee.org/abstract/document/11361191/}
        }
    </pre>
 </div>
--->
+
 
 @author Giuseppe Sutera giuseppe.sutera@unict.it 
 
